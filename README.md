@@ -1,6 +1,9 @@
 # Predictive Modeling Optimization Challenge (IIT KGP ML Hackathon)
 
-This repository contains the machine learning surrogate model developed to predict the **Overall Yield of Product B** in a non-isothermal continuous flow reactor.
+**Team Name:** AlgoRythm  
+**Submission File:** [AlgoRythm.csv](file:///c:/Users/prith/Projects/IIT_KGP_ML/AlgoRythm.csv)
+
+This repository contains the machine learning surrogate model developed by **Team AlgoRythm** to predict the **Overall Yield of Product B** in a non-isothermal continuous flow reactor.
 
 ---
 
@@ -72,6 +75,7 @@ IIT_KGP_ML/
 ├── assets/
 │   └── IIT_KGP_ML.pdf        # Problem statement document
 ├── Model.ipynb               # End-to-end model training & inference notebook
+├── AlgoRythm.csv             # Final Hackathon Submission File (50 rows, 1 column: overall_yield)
 ├── README.md                 # Setup and execution guide
 └── .gitignore                # Git ignore rules
 ```
@@ -90,7 +94,7 @@ IIT_KGP_ML/
 
 ---
 
-## 🎯 Generating Submission File
+## 🎯 Generating Submission File (`AlgoRythm.csv`)
 
 To format predictions for the hackathon submission:
 
@@ -110,6 +114,6 @@ submission = pd.DataFrame({
     'overall_yield': predictions['prediction_label'].round(3)
 })
 
-# Save to your team CSV file
-submission.to_csv('YourTeamName.csv', index=False)
+# Save to team CSV file
+submission.to_csv('AlgoRythm.csv', index=False)
 ```
