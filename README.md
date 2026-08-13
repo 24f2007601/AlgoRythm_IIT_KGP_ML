@@ -17,6 +17,75 @@ This model serves as a computational surrogate to instantaneously predict the re
 
 ---
 
+## 🤖 Why PyCaret Was Chosen & Its Key Advantages
+
+**PyCaret** is an open-source, low-code machine learning library in Python that automates machine learning workflows. For this continuous flow reactor optimization challenge, PyCaret provided several decisive technical advantages:
+
+### Key Advantages for Chemical Reactor Modeling:
+
+1. **Rapid Automated Model Comparison (`compare_models()`)**:
+   * Evaluates 10+ regression algorithms (e.g., LightGBM, Extra Trees, Random Forest, XGBoost, Ridge Regression) simultaneously under unified 10-fold cross-validation.
+   * Enables immediate ranking by **RMSE** (the hackathon's primary evaluation metric), quickly identifying algorithms that capture non-linear chemical dynamics.
+
+2. **Automated Feature Preprocessing & Scaling**:
+   * Standardizes continuous physical variables (temperature, concentration, flow rates) via internal pipeline transformations, preventing scale imbalance between parameters.
+
+3. **Overfitting Prevention & Cross-Validation**:
+   * Built-in stratified/k-fold cross-validation guarantees robust local evaluation on small industrial datasets (150 training samples), preventing data leakage.
+
+4. **Seamless Model Finalization & Serialization**:
+   * `finalize_model()` retrains the top-performing estimator on the complete dataset before export via `save_model()`, producing high-fidelity inference pipelines.
+
+---
+
+## 💡 How to Use PyCaret in This Project
+
+PyCaret simplifies end-to-end model building into a few clean Python calls:
+
+### 1. Initialize Experiment Setup (`setup`)
+```python
+from pycaret.regression import setup
+
+reg_setup = setup(
+    data=train_df,
+    target='overall_yield',
+    session_id=123,
+    train_size=0.8,
+    normalize=True,
+    fold=10
+)
+```
+
+### 2. Compare Models & Select the Best Estimator (`compare_models`)
+```python
+from pycaret.regression import compare_models
+
+# Trains and evaluates 10+ regressors, returning the top model based on RMSE
+best_model = compare_models(sort='RMSE')
+```
+
+### 3. Finalize & Save Model Pipeline (`finalize_model` & `save_model`)
+```python
+from pycaret.regression import finalize_model, save_model
+
+# Retrain best model on the complete dataset (train + validation)
+final_model = finalize_model(best_model)
+
+# Save pipeline as a binary pickle artifact (.pkl)
+save_model(final_model, 'best_yield_model')
+```
+
+### 4. Batch Predict Unseen Test Data (`predict_model`)
+```python
+from pycaret.regression import predict_model
+
+# Generate predictions on unseen test dataset
+predictions = predict_model(final_model, data=test_df)
+# Predictions are stored in the 'prediction_label' column
+```
+
+---
+
 ## 🛠️ Environment Prerequisites
 
 - **Python**: `3.11.x` *(Recommended: Python 3.11 for pre-compiled PyCaret binary wheel compatibility)*
@@ -76,7 +145,7 @@ IIT_KGP_ML/
 │   └── IIT_KGP_ML.pdf        # Problem statement document
 ├── Model.ipynb               # End-to-end model training & inference notebook
 ├── AlgoRythm.csv             # Final Hackathon Submission File (50 rows, 1 column: overall_yield)
-├── README.md                 # Setup and execution guide
+├── README.md                 # Setup, PyCaret guide & execution details
 └── .gitignore                # Git ignore rules
 ```
 
