@@ -1,0 +1,32 @@
+# Virtual Environments
+.venv/
+.venv*/
+env/
+venv/
+ENV/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook Cache & Checkpoints
+.ipynb_checkpoints/
+
+# PyCaret / Logs
+logs.log
+*.log
+
+# PyCaret model artifacts (optional)
+best_yield_model.pkl
+
+# Data outputs & predictions (keep raw datasets, ignore raw output files if needed)
+outputs/
+*.csv
+!datasets/*.csv
+
+# IDE & System Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
